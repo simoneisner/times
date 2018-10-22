@@ -15,17 +15,23 @@ namespace times_compare
             List<DateRange> Difference = new List<DateRange>();
 
 
-            //expecting 9:00 - 9:30
-            //ListA.Add(new DateRange("9:00", "9:30"));
-            //ListB.Add(new DateRange("9:30", "15:00"));
+
+            //expecting 9:30 - 10
+            //ListA.Add(new DateRange("9:00", "10:00"));
+            //ListB.Add(new DateRange("9:00", "9:30"));
 
             //expecting empty string
             //ListA.Add(new DateRange("9:00", "10:00"));
             //ListB.Add(new DateRange("9:00", "10:00"));
 
-            //expecting 9:30 - 10
-            ListA.Add(new DateRange("9:00", "10:00"));
-            ListB.Add(new DateRange("9:00", "9:30"));
+            //expecting 9:00 - 9:30
+            //ListA.Add(new DateRange("9:00", "9:30"));
+            //ListB.Add(new DateRange("9:30", "15:00"));
+
+            //expecting 9:00-9:15, 10:15-10:30
+            ListA.Add(new DateRange("9:00", "9:30"));
+            ListA.Add(new DateRange("10:00", "10:30"));
+            ListB.Add(new DateRange("9:15", "10:15"));
             
 
             foreach (DateRange drA in ListA)
@@ -75,7 +81,8 @@ namespace times_compare
             {
                 StringBuilder sb = new StringBuilder();
 
-                if(dr.Dates[0].ToString() == "0001-01-01 12:00:00 AM"){
+                if(dr.Dates[0].ToString() == "1/1/0001 12:00:00 AM")
+                {
                     sb.Append(string.Empty);
                 }
 
