@@ -14,26 +14,52 @@ namespace times_compare
             List<DateRange> ListB = new List<DateRange>();
             List<DateRange> Difference = new List<DateRange>();
 
+
+            //expecting 9:00 - 9:30
+            //ListA.Add(new DateRange("9:00", "9:30"));
+            //ListB.Add(new DateRange("9:30", "15:00"));
+
+            //expecting empty string
+            //ListA.Add(new DateRange("9:00", "10:00"));
+            //ListB.Add(new DateRange("9:00", "10:00"));
+
+            //expecting 9:30 - 10
             ListA.Add(new DateRange("9:00", "10:00"));
             ListB.Add(new DateRange("9:00", "9:30"));
-
             
+
             foreach (DateRange drA in ListA)
             {
 
                 foreach(DateRange drB in ListB)
                 {
-                    DateRange drDiff = new DateRange();
                     DateTime diffStart = new DateTime();
                     DateTime diffEnd = new DateTime();
 
-                    diffStart = drB.Start;
+                    //diffStart = drB.Start;
+                    //diffEnd = drB.End;
+                    diffStart = drA.Start;
+                    diffEnd = drA.End;
+
+                    //IF DEALING WITH TWO OF THE SAME DATES
+                    if(drA.Start == drB.Start && drA.End == drB.End){
+                        Difference.Add(new DateRange(new DateTime().ToString(), new DateTime().ToString()));
+                        break;
+                    }
+
                     if (drA.Start < drB.Start)
                     {
                         diffStart = drA.Start;
                     }
 
-                    diffEnd = drB.End;
+                    else if(drB.End < drA.End)
+                    {
+                        diffStart = drB.End;
+                        diffEnd = drA.End;
+                        //break;
+                    }
+
+
                     if(drA.End > drB.End)
                     {
                         diffEnd = drA.End;
@@ -48,14 +74,19 @@ namespace times_compare
             foreach(DateRange dr in Difference)
             {
                 StringBuilder sb = new StringBuilder();
-                sb.Append(dr.Start.Hour);
-                sb.Append(":");
-                sb.Append(dr.Start.Minute);
-                sb.Append(" - ");
-                sb.Append(dr.End.Hour);
-                sb.Append(":");
-                sb.Append(dr.End.Minute);
-                Console.WriteLine(sb.ToString());
+
+                if(dr.Dates[0].ToString() == "0001-01-01 12:00:00 AM"){
+                    sb.Append(string.Empty);
+                }
+
+
+                else if (dr.Start.ToString() != string.Empty && dr.End.ToString() != string.Empty)
+                {
+                    sb.Append(dr.Start.TimeOfDay);
+                    sb.Append(" - ");
+                    sb.Append(dr.End.TimeOfDay);
+                }
+                Console.WriteLine(sb);
             }
 
            

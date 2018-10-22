@@ -27,7 +27,7 @@ namespace times_compare.Helpers
         {
             if (string.IsNullOrWhiteSpace(startDate))
             {
-                throw new ArgumentNullException("startDate");
+               throw new ArgumentNullException("startDate");
             }
 
             if (string.IsNullOrWhiteSpace(endDate))
