@@ -66,6 +66,7 @@ namespace times_compare
             DateTime diffEnd = new DateTime();
             bool skipCondition = false;
             bool skipAddList = false;
+            int indexA = 0;
 
 
             foreach (DateRange drA in ListA)
@@ -74,7 +75,8 @@ namespace times_compare
                 //diffEnd = drB.End;
                 diffStart = drA.Start;
                 diffEnd = drA.End;
-
+                int indexB = 0;
+                
                 foreach (DateRange drB in ListB)
                 {
                     //IF DEALING WITH TWO OF THE SAME DATES
@@ -86,8 +88,8 @@ namespace times_compare
                         skipCondition = true;
                     }
 
-                    if(skipCondition == false)
-                    { 
+                    if (skipCondition == false)
+                    {
                         if (drA.Start < drB.Start)
                         {
                             diffStart = drA.Start;
@@ -97,25 +99,31 @@ namespace times_compare
                         {
                             diffStart = drB.End;
                             diffEnd = drA.End;
-                        }
-
-
-                        if (drA.End > drB.End)
-                        {
-                            diffEnd = drA.End;
-                        }
-
-                        if (drA.Start < drB.Start && drB.Start <= diffEnd)
-                        {
-                            diffEnd = drB.Start;
+                            if (ListB.Count > 1 && ListB[indexB + 1].Start < ListA[indexA].End)
+                            {
+                                diffEnd = ListB[indexB + 1].Start;
+                                skipCondition = true;
+                            }
                         }
                     }
+
+                    if (drA.End > drB.End && !skipCondition)
+                    {
+                        diffEnd = drA.End;
+                    }
+
+                    if (drA.Start < drB.Start && drB.Start <= diffEnd && !skipCondition)
+                    {
+                        diffEnd = drB.Start;
+                    }
+                    
                     if (!skipAddList)
                     { 
                         Difference.Add(new DateRange(diffStart.ToString(), diffEnd.ToString()));
                     }
+                    indexB++;
                 }
-
+                indexA++;
             }
 
 
