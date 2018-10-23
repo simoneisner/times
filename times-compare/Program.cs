@@ -64,8 +64,7 @@ namespace times_compare
             List<DateRange> Difference = new List<DateRange>();
             DateTime diffStart = new DateTime();
             DateTime diffEnd = new DateTime();
-            bool skipCondition = false;
-            bool skipAddList = false;
+            
             int indexA = 0;
 
 
@@ -79,6 +78,9 @@ namespace times_compare
                 
                 foreach (DateRange drB in ListB)
                 {
+                    bool skipCondition = false;
+                    bool skipAddList = false;
+
                     //IF DEALING WITH TWO OF THE SAME DATES
                     if (drA.Start == drB.Start && drA.End == drB.End)
                     {
@@ -121,7 +123,7 @@ namespace times_compare
                     { 
                         Difference.Add(new DateRange(diffStart.ToString(), diffEnd.ToString()));
                     }
-                    indexB++;
+                    indexB++;                  
                 }
                 indexA++;
             }
