@@ -64,6 +64,9 @@ namespace times_compare
             List<DateRange> Difference = new List<DateRange>();
             DateTime diffStart = new DateTime();
             DateTime diffEnd = new DateTime();
+            bool skipCondition = false;
+            bool skipAddList = false;
+
 
             foreach (DateRange drA in ListA)
             {
@@ -77,33 +80,40 @@ namespace times_compare
                     //IF DEALING WITH TWO OF THE SAME DATES
                     if (drA.Start == drB.Start && drA.End == drB.End)
                     {
-                        Difference.Add(new DateRange(new DateTime().ToString(), new DateTime().ToString()));
-                        break;
+                        //Difference.Add(new DateRange(new DateTime().ToString(), new DateTime().ToString()));
+                        diffStart = new DateTime();
+                        diffEnd = new DateTime();
+                        skipCondition = true;
                     }
 
-                    if (drA.Start < drB.Start)
-                    {
-                        diffStart = drA.Start;
+                    if(skipCondition == false)
+                    { 
+                        if (drA.Start < drB.Start)
+                        {
+                            diffStart = drA.Start;
+                        }
+
+                        else if (drB.End < drA.End)
+                        {
+                            diffStart = drB.End;
+                            diffEnd = drA.End;
+                        }
+
+
+                        if (drA.End > drB.End)
+                        {
+                            diffEnd = drA.End;
+                        }
+
+                        if (drA.Start < drB.Start && drB.Start <= diffEnd)
+                        {
+                            diffEnd = drB.Start;
+                        }
                     }
-
-                    else if (drB.End < drA.End)
-                    {
-                        diffStart = drB.End;
-                        diffEnd = drA.End;
+                    if (!skipAddList)
+                    { 
+                        Difference.Add(new DateRange(diffStart.ToString(), diffEnd.ToString()));
                     }
-
-
-                    if (drA.End > drB.End)
-                    {
-                        diffEnd = drA.End;
-                    }
-
-                    if (drA.Start < drB.Start && drB.Start <= diffEnd)
-                    {
-                        diffEnd = drB.Start;
-                    }
-
-                    Difference.Add(new DateRange(diffStart.ToString(), diffEnd.ToString()));
                 }
 
             }
